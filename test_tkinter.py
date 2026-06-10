@@ -2,76 +2,76 @@ from tkinter import *
 from tkinter import messagebox, ttk
 from tkinter import filedialog
 
-# --- Функции-обработчики (без изменений) ---
+# Funcion
 def on_button_click():
-    messagebox.showinfo("Кнопка", "Вы нажали кнопку!")
+    messagebox.showinfo("Button", "Button did tap!")
 
 def on_check():
-    state = "включён" if var_check.get() else "выключен"
-    label_check.config(text=f"Флажок {state}")
+    state = "on" if var_check.get() else "off"
+    label_check.config(text=f"Flag {state}")
 
 def on_radio():
     selected = var_radio.get()
-    label_radio.config(text=f"Выбран вариант {selected}")
+    label_radio.config(text=f"Selected: {selected}")
 
 def on_listbox_select(event):
     selection = listbox.get(listbox.curselection())
-    label_listbox.config(text=f"Выбрано: {selection}")
+    label_listbox.config(text=f"Selected: {selection}")
 
 def on_combobox_select(event):
-    label_combobox.config(text=f"Выбрано: {combobox.get()}")
+    label_combobox.config(text=f"Selected: {combobox.get()}")
 
 def on_spinbox():
-    label_spinbox.config(text=f"Значение: {spinbox.get()}")
+    label_spinbox.config(text=f"Value: {spinbox.get()}")
 
 def on_scale(val):
-    label_scale.config(text=f"Ползунок: {int(float(val))}")
+    label_scale.config(text=f"Slider: {int(float(val))}")
 
 def on_entry_change(event):
-    label_entry.config(text=f"Введено: {entry.get()}")
+    label_entry.config(text=f"Entered: {entry.get()}")
 
 def update_text():
     text_content = text.get("1.0", END)
-    label_text.config(text=f"Текст: {text_content[:30]}...")
+    label_text.config(text=f"Text: {text_content[:30]}...")
 
 def on_progress():
     progress['value'] += 10
     if progress['value'] >= 100:
         progress['value'] = 0
-    label_progress.config(text=f"Прогресс: {progress['value']}%")
+    label_progress.config(text=f"Pregress: {progress['value']}%")
 
 def on_treeview_select(event):
     selected = tree.selection()
     if selected:
         item = tree.item(selected[0])
-        label_tree.config(text=f"Выбрано: {item['values'][0]}")
+        label_tree.config(text=f"Selected: {item['values'][0]}")
 
 def choose_file():
-    file_path = filedialog.askopenfilename(title="Выберите файл")
+    file_path = filedialog.askopenfilename(title="Select File")
     if file_path:
-        label_file.config(text=f"Файл: {file_path}")
+        label_file.config(text=f"File: {file_path}")
 
 def choose_folder():
-    folder_path = filedialog.askdirectory(title="Выберите папку")
+    folder_path = filedialog.askdirectory(title="Select Folder")
     if folder_path:
-        label_folder.config(text=f"Папка: {folder_path}")
+        label_folder.config(text=f"Folder: {folder_path}")
 
-# --- Создание главного окна ---
+# Main
 root = Tk()
-root.title("Все виджеты Tkinter")
+root.title("widgets Tkinter")
 root.geometry("900x700")
 
-# --- Строка меню ---
+# Menu
 menubar = Menu(root)
 file_menu = Menu(menubar, tearoff=0)
-file_menu.add_command(label="Выход", command=root.quit)
-menubar.add_cascade(label="Файл", menu=file_menu)
+file_menu.add_command(label="Close program", command=root.quit)
+menubar.add_cascade(label="File", menu=file_menu)
 help_menu = Menu(menubar, tearoff=0)
-help_menu.add_command(label="О программе", command=lambda: messagebox.showinfo("О программе", "Демонстрация всех виджетов"))
-menubar.add_cascade(label="Справка", menu=help_menu)
+help_menu.add_command(label="About", command=lambda: messagebox.showinfo("О программе", "Демонстрация всех виджетов"))
+menubar.add_cascade(label="Info", menu=help_menu)
 root.config(menu=menubar)
 
-# --- Область с прокруткой ---
+# Scroll
 main_frame = Frame(root)
 main_frame.pack(fill=BOTH, expand=True)
 
@@ -90,149 +90,149 @@ canvas.configure(yscrollcommand=scrollbar.set)
 canvas.pack(side=LEFT, fill=BOTH, expand=True)
 scrollbar.pack(side=RIGHT, fill=Y)
 
-# --- Добавляем виджеты с цветом фона и чёрным текстом ---
+
 row = 0
 col = 0
 
-# 1. Label (светло-зелёный)
-lbl1 = Label(scrollable_frame, text="Привет! Это Label", bg="#e0ffe0", fg="black")
+# 1. Label
+lbl1 = Label(scrollable_frame, text="Hi! Its Label", bg="#e0ffe0", fg="black")
 lbl1.grid(row=row, column=col, padx=10, pady=5, sticky="w")
 row += 1
 
-# 2. Button (голубой)
-btn = Button(scrollable_frame, text="Нажми меня", command=on_button_click, bg="#a0d6ff", fg="black")
+# 2. Button
+btn = Button(scrollable_frame, text="Press me", command=on_button_click, bg="#a0d6ff", fg="black")
 btn.grid(row=row, column=col, padx=10, pady=5, sticky="w")
 row += 1
 
-# 3. Entry (жёлтый) + метка
+# 3. Entry 
 entry = Entry(scrollable_frame, bg="#ffffcc", fg="black")
 entry.bind("<KeyRelease>", on_entry_change)
 entry.grid(row=row, column=col, padx=10, pady=5, sticky="w")
-label_entry = Label(scrollable_frame, text="Введено: ", bg="#ffffcc", fg="black")
+label_entry = Label(scrollable_frame, text="Entered Text: ", bg="#ffffcc", fg="black")
 label_entry.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
 row += 1
 
-# 4. Text (светло-серый) + кнопка + метка
+# 4. Text 
 text = Text(scrollable_frame, height=4, width=30, bg="#f0f0f0", fg="black")
 text.grid(row=row, column=col, padx=10, pady=5, sticky="w")
-btn_text = Button(scrollable_frame, text="Обновить метку", command=update_text, bg="#a0d6ff", fg="black")
+btn_text = Button(scrollable_frame, text="Update", command=update_text, bg="#a0d6ff", fg="black")
 btn_text.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
-label_text = Label(scrollable_frame, text="Текст: ", bg="#f0f0f0", fg="black")
+label_text = Label(scrollable_frame, text="Text: ", bg="#f0f0f0", fg="black")
 label_text.grid(row=row+1, column=col, columnspan=2, padx=10, pady=5, sticky="w")
 row += 2
 
-# 5. Checkbutton (розовый)
+# 5. Checkbutton 
 var_check = BooleanVar()
-check = Checkbutton(scrollable_frame, text="Я согласен", variable=var_check, command=on_check, bg="#ffcccc", fg="black")
+check = Checkbutton(scrollable_frame, text="Flag", variable=var_check, command=on_check, bg="#ffcccc", fg="black")
 check.grid(row=row, column=col, padx=10, pady=5, sticky="w")
-label_check = Label(scrollable_frame, text="Флажок выключен", bg="#ffcccc", fg="black")
+label_check = Label(scrollable_frame, text="Flag is off", bg="#ffcccc", fg="black")
 label_check.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
 row += 1
 
-# 6. Radiobuttons (лавандовый)
+# 6. Radiobuttons 
 var_radio = StringVar(value="1")
-radio1 = Radiobutton(scrollable_frame, text="Вариант 1", variable=var_radio, value="1", command=on_radio, bg="#e6ccff", fg="black")
-radio2 = Radiobutton(scrollable_frame, text="Вариант 2", variable=var_radio, value="2", command=on_radio, bg="#e6ccff", fg="black")
+radio1 = Radiobutton(scrollable_frame, text="Option 1", variable=var_radio, value="1", command=on_radio, bg="#e6ccff", fg="black")
+radio2 = Radiobutton(scrollable_frame, text="Option 2", variable=var_radio, value="2", command=on_radio, bg="#e6ccff", fg="black")
 radio1.grid(row=row, column=col, padx=10, pady=5, sticky="w")
 radio2.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
-label_radio = Label(scrollable_frame, text="Выбран вариант 1", bg="#e6ccff", fg="black")
+label_radio = Label(scrollable_frame, text="Selected option 1", bg="#e6ccff", fg="black")
 label_radio.grid(row=row+1, column=col, columnspan=2, padx=10, pady=5, sticky="w")
 row += 2
 
-# 7. Listbox (оранжевый)
+# 7. Listbox 
 listbox = Listbox(scrollable_frame, height=3, bg="#ffe0b3", fg="black")
-listbox.insert(1, "Яблоко")
-listbox.insert(2, "Банан")
-listbox.insert(3, "Апельсин")
+listbox.insert(1, "Apple")
+listbox.insert(2, "Banana")
+listbox.insert(3, "Orange")
 listbox.bind("<<ListboxSelect>>", on_listbox_select)
 listbox.grid(row=row, column=col, padx=10, pady=5, sticky="w")
-label_listbox = Label(scrollable_frame, text="Выбрано: ", bg="#ffe0b3", fg="black")
+label_listbox = Label(scrollable_frame, text="Selected: ", bg="#ffe0b3", fg="black")
 label_listbox.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
 row += 1
 
-# 8. Combobox (ttk, цвет фона не меняем, текст чёрный)
-combobox = ttk.Combobox(scrollable_frame, values=["Красный", "Зелёный", "Синий"])
+# 8. Combobox (ttk)
+combobox = ttk.Combobox(scrollable_frame, values=["Red", "Green", "Blue"])
 combobox.bind("<<ComboboxSelected>>", on_combobox_select)
 combobox.grid(row=row, column=col, padx=10, pady=5, sticky="w")
-label_combobox = Label(scrollable_frame, text="Выбрано: ", bg="#ccffff", fg="black")
+label_combobox = Label(scrollable_frame, text="Selected: ", bg="#ccffff", fg="black")
 label_combobox.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
 row += 1
 
-# 9. Spinbox (коралловый)
+# 9. Spinbox
 spinbox = Spinbox(scrollable_frame, from_=0, to=10, command=on_spinbox, bg="#ffccb3", fg="black")
 spinbox.grid(row=row, column=col, padx=10, pady=5, sticky="w")
-label_spinbox = Label(scrollable_frame, text="Значение: 0", bg="#ffccb3", fg="black")
+label_spinbox = Label(scrollable_frame, text="Value: 0", bg="#ffccb3", fg="black")
 label_spinbox.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
 row += 1
 
-# 10. Scale (серый) – текст метки чёрный
+# 10. Scale 
 scale = Scale(scrollable_frame, from_=0, to=100, orient=HORIZONTAL, command=on_scale, bg="#cccccc")
 scale.grid(row=row, column=col, padx=10, pady=5, sticky="w")
-label_scale = Label(scrollable_frame, text="Ползунок: 0", bg="#cccccc", fg="black")
+label_scale = Label(scrollable_frame, text="Slider: 0", bg="#cccccc", fg="black")
 label_scale.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
 row += 1
 
-# 11. Progressbar (метка белая, текст чёрный)
+# 11. Progressbar
 progress = ttk.Progressbar(scrollable_frame, length=200, mode='determinate')
 progress.grid(row=row, column=col, padx=10, pady=5, sticky="w")
 btn_progress = Button(scrollable_frame, text="+10%", command=on_progress, bg="#a0d6ff", fg="black")
 btn_progress.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
-label_progress = Label(scrollable_frame, text="Прогресс: 0%", bg="#ffffff", fg="black")
+label_progress = Label(scrollable_frame, text="Progress: 0%", bg="#ffffff", fg="black")
 label_progress.grid(row=row+1, column=col, columnspan=2, padx=10, pady=5, sticky="w")
 row += 2
 
-# 12. Treeview (ttk, цвет фона не меняем, текст чёрный)
-tree = ttk.Treeview(scrollable_frame, columns=("Имя", "Возраст"), show="headings", height=3)
-tree.heading("Имя", text="Имя")
-tree.heading("Возраст", text="Возраст")
-tree.insert("", "end", values=("Анна", 25))
-tree.insert("", "end", values=("Иван", 30))
+# 12. Treeview (ttk)
+tree = ttk.Treeview(scrollable_frame, columns=("Name", "Age"), show="headings", height=3)
+tree.heading("Name", text="Name")
+tree.heading("Age", text="Name")
+tree.insert("", "end", values=("Anna", 25))
+tree.insert("", "end", values=("Vladislav", 30))
 tree.bind("<<TreeviewSelect>>", on_treeview_select)
 tree.grid(row=row, column=col, padx=10, pady=5, sticky="w")
 label_tree = Label(scrollable_frame, text="Выбрано: ", bg="#f5f5dc", fg="black")
 label_tree.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
 row += 1
 
-# 13. Canvas (белый) – текст метки чёрный
+# 13. Canvas
 canvas_widget = Canvas(scrollable_frame, width=200, height=100, bg="white")
 canvas_widget.create_rectangle(10, 10, 60, 60, fill="red")
 canvas_widget.create_oval(70, 10, 120, 60, fill="blue")
 canvas_widget.grid(row=row, column=col, padx=10, pady=5, sticky="w")
-Label(scrollable_frame, text="Canvas: фигуры", bg="white", fg="black").grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
+Label(scrollable_frame, text="Canvas: shapes", bg="white", fg="black").grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
 row += 1
 
-# 14. PanedWindow (светло-серый) – текст внутри Label чёрный
+# 14. PanedWindow
 paned = PanedWindow(scrollable_frame, orient=HORIZONTAL, bg="#cccccc")
-left = Label(paned, text="Левая панель", bg="lightgray", fg="black")
-right = Label(paned, text="Правая панель", bg="lightblue", fg="black")
+left = Label(paned, text="Left panel", bg="lightgray", fg="black")
+right = Label(paned, text="Right panel", bg="lightblue", fg="black")
 paned.add(left)
 paned.add(right)
 paned.grid(row=row, column=col, columnspan=2, padx=10, pady=5, sticky="ew")
 row += 1
 
-# 15. Notebook (вкладки) – текст внутри вкладок чёрный (по умолчанию)
+# 15. Notebook
 notebook = ttk.Notebook(scrollable_frame)
 tab1 = Frame(notebook)
 tab2 = Frame(notebook)
-notebook.add(tab1, text="Вкладка 1")
-notebook.add(tab2, text="Вкладка 2")
-Label(tab1, text="Содержимое вкладки 1", fg="black").pack()
-Label(tab2, text="Содержимое вкладки 2", fg="black").pack()
+notebook.add(tab1, text="Page 1")
+notebook.add(tab2, text="Page 2")
+Label(tab1, text="Content 1", fg="black").pack()
+Label(tab2, text="Сontent 2", fg="black").pack()
 notebook.grid(row=row, column=col, columnspan=2, padx=10, pady=5, sticky="ew")
 row += 1
 
-# 16. Выбор файла и папки (светло-фиолетовый, текст чёрный)
-btn_file = Button(scrollable_frame, text="Выбрать файл", command=choose_file, bg="#d9b3ff", fg="black")
+# 16. Select file and folder
+btn_file = Button(scrollable_frame, text="Select file", command=choose_file, bg="#d9b3ff", fg="black")
 btn_file.grid(row=row, column=col, padx=10, pady=5, sticky="w")
-label_file = Label(scrollable_frame, text="Файл не выбран", bg="#d9b3ff", fg="black")
+label_file = Label(scrollable_frame, text="File not selected", bg="#d9b3ff", fg="black")
 label_file.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
 row += 1
 
-btn_folder = Button(scrollable_frame, text="Выбрать папку", command=choose_folder, bg="#d9b3ff", fg="black")
+btn_folder = Button(scrollable_frame, text="Select folder", command=choose_folder, bg="#d9b3ff", fg="black")
 btn_folder.grid(row=row, column=col, padx=10, pady=5, sticky="w")
-label_folder = Label(scrollable_frame, text="Папка не выбрана", bg="#d9b3ff", fg="black")
+label_folder = Label(scrollable_frame, text="Folder not selected", bg="#d9b3ff", fg="black")
 label_folder.grid(row=row, column=col+1, padx=10, pady=5, sticky="w")
 row += 1
 
-# Запуск
+# Start
 root.mainloop()
