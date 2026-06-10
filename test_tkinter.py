@@ -67,7 +67,7 @@ file_menu = Menu(menubar, tearoff=0)
 file_menu.add_command(label="Close program", command=root.quit)
 menubar.add_cascade(label="File", menu=file_menu)
 help_menu = Menu(menubar, tearoff=0)
-help_menu.add_command(label="About", command=lambda: messagebox.showinfo("О программе", "Демонстрация всех виджетов"))
+help_menu.add_command(label="About", command=lambda: messagebox.showinfo("About", "Widgets"))
 menubar.add_cascade(label="Info", menu=help_menu)
 root.config(menu=menubar)
 
